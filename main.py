@@ -7,14 +7,14 @@ from discord.ext import commands
 
 client = discord.Client()
 
-greetings = ["Hey there.", "What's up?", "*deer noise*", "Is somebody talking about me?"]
+greetings = ["Hey there!", "Heyo!", "Hewwo!", "What's up?", "*bleat*"]
 
 
 @client.event
 async def on_ready():
   print('Logged in as {0.user}'.format(client))
 
-# Basic commands
+# Ping-pong Command
 @client.event
 async def on_message(message):
   if message.author == client.user:
@@ -24,7 +24,13 @@ async def on_message(message):
   if message.content.startswith('~Ping'):
     await message.channel.send('Pong.')
 
-# Welcome
+# Greetings
+@client.event
+async def on_message(message):
+  if "northbot" in message.content:
+    await message.channel.send(random.choice(greetings))
+
+# Welcome (For esk8 server)
 @client.event
 async def on_member_join(member):
   # Console new member report
@@ -33,6 +39,7 @@ async def on_member_join(member):
   # Welcome message
   await client.send_message(discord.Object(id='LOGCHANNEL'), "Welcome, " + member.name + "! Please type \"~verify\" in this channel in order to receive access to this server.")
 
+# Still building a verification system
 #@commands.guild_only()
 #@client.command(pass_context = True)
 @client.event
